@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Auto passweord generator</title>
+</head>
+
+<body>
+    <form action = "{{ url_for('post_password') }}" method = "post">
+        <label for="name">Name of the website password is for</label>
+        <br><br>
+        <input type="text" id="wname" name="wname"><br>
+
+        <button type="submit">GENERATE</button>
+        <button type="submit" formaction="{{ url_for('post_password_name') }}">GET</button>
+    </form>
+
+    {% if password %}
+        <h2>password is {{ password }}</h2>
+    {% endif %}
+
+    <div>
+        <h2> Automatic password Generator and manager</h2><br>
+        <p>Input the name of the website you want to use the password for (This is the name teh password is saved as), and click
+            the submit button</p>
+        <p>To retrieve the password, type the name you input when generating the password and you get back your password</p>
+    </div>
+</body>
