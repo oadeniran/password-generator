@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Auto passweord generator</title>
+    <title>Auto passwerd generator</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="StyleSheet" href="{{ url_for('static', filename = 'style.css') }}"/>
 </head>
 
 <body>
-    <form action = "{{ url_for('post_password') }}" method = "post">
-        <label for="name">Name of the website password is for</label>
-        <br><br>
-        <input type="text" id="wname" name="wname"><br>
+    <div calss = "container">
+        <div calss = "header">
+            <h2> Automatic password Generator and manager</h2>
+        </div>
+        <div class = "form-field">
+            <form action = "{{ url_for('post_password') }}" method = "post">
+                <label for="name">Name of the website password is for</label>
+                <br>
+                <input type="text" id="wname" name="wname"><br>
+        
+                <button type="submit">GENERATE</button>
+                <button type="submit" formaction="{{ url_for('post_password_name') }}">GET</button>
 
-        <button type="submit">GENERATE</button>
-        <button type="submit" formaction="{{ url_for('post_password_name') }}">GET</button>
-    </form>
-
-    {% if password %}
-        <h2>password is {{ password }}</h2>
-    {% endif %}
-
-    <div>
-        <h2> Automatic password Generator and manager</h2><br>
-        <p>Input the name of the website you want to use the password for (This is the name teh password is saved as), and click
-            the submit button</p>
-        <p>To retrieve the password, type the name you input when generating the password and you get back your password</p>
+                <div class = "password-show">
+                    {% if password %}
+                        <h2> {{ password }}</h2>
+                    {% endif %}
+                </div>
+                
+            </form>
+        </div>
+        <br><br><br><br>
+        <div>
+            <p style="text-align:bottom">Input the name of the website you want to use the password for (This is the name the password is saved as), and click
+                the submit button</p>
+            <p style="text-align:bottom">To retrieve the password, type the name you input when generating the password and you get back your password</p>
+        </div>
     </div>
-</body>
+</body>   
+
+
