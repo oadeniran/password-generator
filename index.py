@@ -23,20 +23,38 @@ def generate_password():
 
 def save_password(name, password):
     if os.path.exists('password_db.pk'):
-        with open('password_db.pk', 'rb') as f:
-            psswrd_dict = pk.load(f)
-            psswrd_dict[name] = password
-        os.remove('password_db.pk')
+        try:
+            with open('password_db.pk', 'rb') as f:
+                psswrd_dict = pk.load(f)
+                psswrd_dict[name] = password
+            os.remove('password_db.pk')
+            with open('password_db.pk', 'wb') as f:
+                pk.dump(psswrd_dict, f)
+        except:
+            with open('tmp/password_db.pk', 'rb') as f:
+                psswrd_dict = pk.load(f)
+                psswrd_dict[name] = password
+            os.remove('tmp/password_db.pk')
+            with open('password_db.pk', 'wb') as f:
+                pk.dump(psswrd_dict, f)
     else:
         psswrd_dict = {name : password}
-    with open('password_db.pk', 'wb') as f:
-        pk.dump(psswrd_dict, f)
+        with open('password_db.pk', 'wb') as f:
+            pk.dump(psswrd_dict, f)
 
 def load_password(name):
-    with open('password_db.pk', 'rb') as f:
-        psswrd_dict = pk.load(f)
-        password = psswrd_dict[name]
-    return password
+    if os.path.exists('tmp/password_db.pk'):
+        with open('tmp/password_db.pk', 'rb') as f:
+            psswrd_dict = pk.load(f)
+            password = psswrd_dict[name]
+        return password
+    else:
+        with open('password_db.pk', 'rb') as f:
+            psswrd_dict = pk.load(f)
+            password = psswrd_dict[name]
+        return password
+
+
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
