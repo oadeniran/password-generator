@@ -38,7 +38,7 @@ def save_password(name, password):
                 os.remove('/tmp/password_db.pk')
             else:
                 psswrd_dict = {name : password}
-                
+
             with open('/tmp/password_db.pk', 'wb') as f:
                 pk.dump(psswrd_dict, f)
     else:
@@ -47,15 +47,15 @@ def save_password(name, password):
             pk.dump(psswrd_dict, f)
 
 def load_password(name):
-    if os.path.exists('tmp/password_db.pk'):
-        with open('tmp/password_db.pk', 'rb') as f:
+    if os.path.exists('/tmp/password_db.pk'):
+        with open('/tmp/password_db.pk', 'rb') as f:
             psswrd_dict = pk.load(f)
-            password = psswrd_dict[name]
+            password = psswrd_dict.get(name, "")
         return password
     else:
         with open('password_db.pk', 'rb') as f:
             psswrd_dict = pk.load(f)
-            password = psswrd_dict[name]
+            password = psswrd_dict.get(name, "")
         return password
 
 
@@ -78,6 +78,9 @@ def post_password_name():
     name = list(request.form.values())[0]
     name = name.replace(" ", "").lower()
     password = load_password(name)
-    password_text = f'Generated password for {name} is {password}'
+    if password == "":
+        password_text = f'No Previously Generated password for {name}'
+    else:
+        password_text = f'Generated password for {name} is {password}'
     return render_template('index.html', password = password_text)
 
