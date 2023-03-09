@@ -14,4 +14,7 @@ Fast, easy and reliable - Secure also, because no internet connection is needed
 Follow the link provided to you and your manager is ready.
 The database is also persistent, therefore in the event that the app stops, just re-run the last step stated above and all your data still exists
 
+### Test it at - password-generator-kfvstia8d-oadeniran.vercel.app
+
+
 # ENJOY!
