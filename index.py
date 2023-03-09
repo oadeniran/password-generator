@@ -22,18 +22,22 @@ def generate_password():
     return password
 
 def save_password(name, password):
+    prev = ""
     if os.path.exists('password_db.pk'):
         try:
             with open('password_db.pk', 'rb') as f:
                 psswrd_dict = pk.load(f)
+                prev = psswrd_dict.get(name, "")
                 psswrd_dict[name] = password
             os.remove('password_db.pk')
             with open('password_db.pk', 'wb') as f:
                 pk.dump(psswrd_dict, f)
+            return prev
         except:
             if os.path.exists('/tmp/password_db.pk'):
                 with open('/tmp/password_db.pk', 'rb') as f:
                     psswrd_dict = pk.load(f)
+                    prev = psswrd_dict.get(name, "")
                     psswrd_dict[name] = password
                 os.remove('/tmp/password_db.pk')
             else:
@@ -41,10 +45,12 @@ def save_password(name, password):
 
             with open('/tmp/password_db.pk', 'wb') as f:
                 pk.dump(psswrd_dict, f)
+            return prev
     else:
         psswrd_dict = {name : password}
         with open('password_db.pk', 'wb') as f:
             pk.dump(psswrd_dict, f)
+        return prev
 
 def load_password(name):
     if os.path.exists('/tmp/password_db.pk'):
@@ -69,8 +75,12 @@ def post_password():
     name = list(request.form.values())[0]
     name = name.replace(" ", "").lower()
     password = generate_password()
-    save_password(name, password)
-    password_text = f'Generated password for {name} is {password}'
+    prev = save_password(name, password)
+    if prev == "":
+        password_text = f'Generated password for {name} is {password}'
+    else:
+        password_text = f'Previous password found - {prev}.... New generated password for {name} is {password}'
+
     return render_template('index.html', password = password_text)
 
 @app.route('/get_password', methods = ['POST'])
