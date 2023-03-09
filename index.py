@@ -31,11 +31,15 @@ def save_password(name, password):
             with open('password_db.pk', 'wb') as f:
                 pk.dump(psswrd_dict, f)
         except:
-            with open('tmp/password_db.pk', 'rb') as f:
-                psswrd_dict = pk.load(f)
-                psswrd_dict[name] = password
-            os.remove('tmp/password_db.pk')
-            with open('password_db.pk', 'wb') as f:
+            if os.path.exists('/tmp/password_db.pk'):
+                with open('/tmp/password_db.pk', 'rb') as f:
+                    psswrd_dict = pk.load(f)
+                    psswrd_dict[name] = password
+                os.remove('/tmp/password_db.pk')
+            else:
+                psswrd_dict = {name : password}
+                
+            with open('/tmp/password_db.pk', 'wb') as f:
                 pk.dump(psswrd_dict, f)
     else:
         psswrd_dict = {name : password}
