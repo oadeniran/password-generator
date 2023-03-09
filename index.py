@@ -45,6 +45,7 @@ def index():
 @app.route('/generate', methods = ['POST'])
 def post_password():
     name = list(request.form.values())[0]
+    name = name.replace(" ", "").lower()
     password = generate_password()
     save_password(name, password)
     password_text = f'Generated password for {name} is {password}'
@@ -53,6 +54,7 @@ def post_password():
 @app.route('/get_password', methods = ['POST'])
 def post_password_name():
     name = list(request.form.values())[0]
+    name = name.replace(" ", "").lower()
     password = load_password(name)
     password_text = f'Generated password for {name} is {password}'
     return render_template('index.html', password = password_text)
