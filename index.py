@@ -79,7 +79,7 @@ def post_password():
     if prev == "":
         password_text = f'Generated password for {name} is {password}'
     else:
-        password_text = f'Previous password found - {prev}.... New generated password for {name} is {password}'
+        password_text = f'Previous password found - {prev} <----> New generated password for {name} is {password}'
 
     return render_template('index.html', password = password_text)
 

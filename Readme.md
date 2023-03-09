@@ -8,8 +8,10 @@ Fast, easy and reliable - Secure also, because no internet connection is needed
 
 ## steps to use
 * download this repository on your local system
-* Ensure python is installed and from command line  run: pip install flask
-* Navigate to the root directory where the repo is located on your system on the command line and run: flask --app main.py --debug run
+* Ensure python is installed on your system(for linux distro ensure pip is installed also)
+* Navigate to the root directory where the repo is located on your system 
+    * For windows: Double click the 'cmd-start' file
+    * For Linux: Run the shell file
 
 Follow the link provided to you and your manager is ready.
 The database is also persistent, therefore in the event that the app stops, just re-run the last step stated above and all your data still exists
